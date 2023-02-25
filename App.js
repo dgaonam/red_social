@@ -1,12 +1,59 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
+
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
+
+import UserContext from "./context/UserContext";
+
+import Login from "./components/login/Login";
+import Register from './components/register/Register';
+import Reset from './components/password/Reset';
+
+//
 
 export default function App() {
+
+  const Stack = createStackNavigator();
+
+  const user = {
+
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <UserContext.Provider value={user}>
+      <NavigationContainer styles={styles.container}>
+        <Stack.Navigator initialRouteName="Login" screenOptions={{
+          headerTitleAlign: 'center',
+          headerStyle: {
+            backgroundColor: '#114358',
+          },
+          headerTintColor: '#FFFFFF',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }} >
+
+          <Stack.Screen
+            name="Login"
+            options={{ title: 'Practica Final' }}
+            component={Login}
+          />
+          <Stack.Screen
+            name="Register"
+            options={{ title: 'Registro' }}
+            component={Register}
+          />
+          <Stack.Screen
+            name="Reset"
+            options={{ title: 'Reset Password' }}
+            component={Reset}
+          />
+
+        </Stack.Navigator>
+      </NavigationContainer>
+    </UserContext.Provider>
   );
 }
 
