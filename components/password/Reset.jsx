@@ -1,4 +1,4 @@
-import { Text, View, TextInput, StyleSheet, TouchableOpacity, Image  } from 'react-native';
+import { Text, View, TextInput, StyleSheet, TouchableOpacity, Image,ActivityIndicator  } from 'react-native';
 import { useState } from "react"
 import { sendPasswordReset } from '../../config/auth';
 
@@ -7,21 +7,34 @@ import { sendPasswordReset } from '../../config/auth';
 
 const Reset = () => {
     const [email, setEmail] = useState('isc.gaona@gmail.com');
+    const [isLoading, setIsLoading] = useState(false);
     const onHandlerEmail=(email)=>{
         setEmail(()=>email);
         console.info(email);
     }
 
+    if (isLoading) {
+        return (
+          <View style={styles.container}>
+            <ActivityIndicator size="large" color="#3B82F6" />
+          </View>
+        );
+      }
+
     const sendEmail= async()=>{
+        setIsLoading(true);
         let send = await sendPasswordReset(email);
         if(send){
             alert("Se envio corre electronico, favor de revisar el enlace y restablecer la contraseña");
+            setIsLoading(false);
         }else{
             alert("Ocurrio un erro al enviar el correo");
+            setIsLoading(false);
         }
         //console.log(send);
       
     }
+
 
     return (
         <View style={styles.container}>

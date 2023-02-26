@@ -1,4 +1,4 @@
-import { Text, View, TextInput, StyleSheet, TouchableOpacity, Image,Alert } from 'react-native';
+import { Text, View, TextInput, StyleSheet, TouchableOpacity, Image,Alert,ActivityIndicator } from 'react-native';
 import { useState } from "react"
 import { userCreate } from '../../config/auth';
 import { writeUserData } from '../../config/database';
@@ -31,7 +31,16 @@ const Register = () => {
         setFullName(()=>fullName);
     }
 
+    if (isLoading) {
+        return (
+          <View style={styles.container}>
+            <ActivityIndicator size="large" color="#3B82F6" />
+          </View>
+        );
+      }
+
     const RegisterNewUser= async()=>{
+        setIsLoading(true);
         await userCreate(email,password).then( async(result)=> {
             console.info(result);
             let created = await writeUserData("user",result.uid,email,fullName);
@@ -41,15 +50,18 @@ const Register = () => {
                     "Registro de usuarios",
                     "Registrado de forma correcta"
                   );
+                  setIsLoading(false);
             }else{
                 Alert.alert(
                     "Registro de usuarios",
                     "No se logro registrar al usuario"
                   );
+                  setIsLoading(false);
             }
             
         }).catch((error)=>{
             console.error(error);
+            setIsLoading(false);
         });
     }
 

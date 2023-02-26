@@ -1,4 +1,4 @@
-import { Text, View, TextInput, StyleSheet, TouchableOpacity, Image, Alert } from 'react-native';
+import { Text, View, TextInput, StyleSheet, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 import { useState } from "react"
 import { FontAwesome } from '@expo/vector-icons';
 import { loginFacebook, login } from '../../config/auth';
@@ -22,25 +22,32 @@ const Login = ({ navigation }) => {
   const { user, setUser } = UseUser();
 
   const loginWhitFacebook = async () => {
+    setIsLoading(true);
     await loginFacebook().then(
       (result) => {
         setUser({ session: true, data: { email: result.email, displayName: result.displayName, localId: result.uid } });
+        setIsLoading(false);
       }
     ).catch((error) => {
       console.error("Algo salio mal", error);
+      setIsLoading(false);
     });
 
   }
 
   const loginWhitEmail = async () => {
+    setIsLoading(true);
     await login(email, password).then((result) => {
       console.info(result);
       if (typeof result.user?.email !== 'undefined') {
         setUser({ session: true, data: { email: result.user?.email, displayName: result.user?.displayName, localId: result.user?.uid } });
+        setIsLoading(false);
       } else if (typeof result?.code === 'number') {
         console.info("regreso un error", result);
+        setIsLoading(false);
       } else {
         console.error("No entro en if");
+        setIsLoading(false);
       }
     }).catch((error) => {
       switch (error.message) {
@@ -55,7 +62,16 @@ const Login = ({ navigation }) => {
           break;
       }
       console.log(error.message);
+      setIsLoading(false);
     });
+  }
+
+  if (isLoading) {
+    return (
+      <View style={styles.container}>
+        <ActivityIndicator size="large" color="#3B82F6" />
+      </View>
+    );
   }
 
   return (

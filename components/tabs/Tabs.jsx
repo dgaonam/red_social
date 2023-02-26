@@ -28,11 +28,10 @@ const Tabs = () => {
                 }
                 return null;
             },
-            activeColor: "#f0edf6",
-            inactiveColor: "#3e2465",
             headerShown: false,
             unmountOnBlur: true,
-        })}  barStyle={styles.tabBarBadgeStyle}>
+        })}  barStyle={styles.tabBarBadgeStyle} activeColor="#F2AA1F"
+        inactiveColor="#FFFFFF" tabBarIcon={styles.icon}>
             <Tab.Screen name="Home" options={{ title: 'Inicio' }} component={Home} />
             <Tab.Screen name="Search" options={{ title: 'Buscar' }} component={Search} />
             <Tab.Screen name="Notifications" options={{ title: 'Notificaciones' }} component={Notifications} />
@@ -51,8 +50,16 @@ const styles = StyleSheet.create({
       fontWeight: 'bold'
     },
     tabBarBadgeStyle: {
-        backgroundColor: "#114358"
+        backgroundColor: "#114358",
+        fontSize: 14,
+        fontWeight: 'bold',
+        color: "#FFFFFF"
+    },
+    icon: {
+        color: "#FFFFFF",
+        backgroundColor: "#FFFFF"
     }
+
   });
 
 export default Tabs;
