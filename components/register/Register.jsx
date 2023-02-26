@@ -1,15 +1,58 @@
-import { Text, View, TextInput, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { Text, View, TextInput, StyleSheet, TouchableOpacity, Image,Alert } from 'react-native';
 import { useState } from "react"
+import { userCreate } from '../../config/auth';
+import { writeUserData } from '../../config/database';
+
+import UseUser from '../../hooks/UseUser';
 
 const Register = () => {
     const [userAvatar, setUserAvatar] = useState(null);
-    const [firsName, setFirsName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
+    const [fullName, setFullName] = useState('Daniel Alejandro Gaona Mercado');
+    const [email, setEmail] = useState('isc.gaona@gmail.com');
+    const [password, setPassword] = useState('12qwaszx');
+    const [confirmPassword, setConfirmPassword] = useState('12qwaszx');
+
+    const { user, setUser } = UseUser();
 
     const [isLoading, setIsLoading] = useState(false);
+
+    const onHandlerEmail=(email)=>{
+        setEmail(()=>email);
+        console.info(email);
+    }
+    const onHandlerPassword=(password)=>{
+        setPassword(()=>password);
+        console.info(password);
+    }
+    const onHandlerPasswordConfirm=(confirmPassword)=>{
+        confirmPassword(()=>confirmPassword);
+    }
+    const onHandlerFullName=(fullName)=>{
+        setFullName(()=>fullName);
+    }
+
+    const RegisterNewUser= async()=>{
+        await userCreate(email,password).then( async(result)=> {
+            console.info(result);
+            let created = await writeUserData("user",result.uid,email,fullName);
+            if(created===true){
+                setUser({ session: true, data: { email: result.email, displayName: fullName, localId: result.uid } });
+                Alert.alert(
+                    "Registro de usuarios",
+                    "Registrado de forma correcta"
+                  );
+            }else{
+                Alert.alert(
+                    "Registro de usuarios",
+                    "No se logro registrar al usuario"
+                  );
+            }
+            
+        }).catch((error)=>{
+            console.error(error);
+        });
+    }
+
     return (
         <View style={styles.container}>
             <TouchableOpacity style={styles.uploadContainer} >
@@ -21,12 +64,16 @@ const Register = () => {
                 placeholder="Nombre (s) Apellido (s)"
                 placeholderTextColor="#CCCCCC"
                 style={styles.input}
+                value={fullName}
+                onChangeText={onHandlerFullName}
             />
             <TextInput
                 autoCapitalize='none'
                 placeholder="Correo electronico"
                 placeholderTextColor="#CCCCCC"
                 style={styles.input}
+                value={email}
+                onChangeText={onHandlerEmail}
             />
             <TextInput
                 autoCapitalize='none'
@@ -34,6 +81,8 @@ const Register = () => {
                 placeholderTextColor="#CCCCCC"
                 secureTextEntry
                 style={styles.input}
+                value={password}
+                onChangeText={onHandlerPassword}
             />
             <TextInput
                 autoCapitalize='none'
@@ -41,8 +90,10 @@ const Register = () => {
                 placeholderTextColor="#CCCCCC"
                 secureTextEntry
                 style={styles.input}
+                value={confirmPassword}
+                onChangeText={onHandlerPasswordConfirm}
             />
-            <TouchableOpacity style={styles.register} >
+            <TouchableOpacity style={styles.register} onPress={RegisterNewUser}>
                 <Text style={styles.registerLabel} >Registrar</Text>
             </TouchableOpacity>
         </View>
@@ -70,7 +121,7 @@ const styles = StyleSheet.create({
         width: 128,
         height: 128,
         borderRadius: 128 / 2,
-        borderStyle: "1px solid"
+        borderStyle: 1
     },
     uploadImageTitle: {
         fontWeight: 'bold',

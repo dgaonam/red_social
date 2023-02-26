@@ -1,28 +1,63 @@
-import { Text, View, TextInput, StyleSheet, TouchableOpacity, Image,Alert } from 'react-native';
+import { Text, View, TextInput, StyleSheet, TouchableOpacity, Image, Alert } from 'react-native';
 import { useState } from "react"
 import { FontAwesome } from '@expo/vector-icons';
-import { loginFacebook } from '../../config/auth';
+import { loginFacebook, login } from '../../config/auth';
 
 import UseUser from '../../hooks/UseUser';
 
 const Login = ({ navigation }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('isc.gaona@gmail.com');
+  const [password, setPassword] = useState('12qwaszx');
   const [isLoading, setIsLoading] = useState(false);
+
+  const onHandlerEmail = (email) => {
+    setEmail(() => email);
+    console.info(email);
+  }
+  const onHandlerPassword = (password) => {
+    setPassword(() => password);
+    console.info(password);
+  }
 
   const { user, setUser } = UseUser();
 
-  const login = async () => {
+  const loginWhitFacebook = async () => {
     await loginFacebook().then(
       (result) => {
-        setUser({ session: true, data: { email: result.email, displayName: result.displayName,localId:result.uid } });
-        
+        setUser({ session: true, data: { email: result.email, displayName: result.displayName, localId: result.uid } });
       }
     ).catch((error) => {
       console.error("Algo salio mal", error);
     });
-    console.log(user);
+
   }
+
+  const loginWhitEmail = async () => {
+    await login(email, password).then((result) => {
+      console.info(result);
+      if (typeof result.user?.email !== 'undefined') {
+        setUser({ session: true, data: { email: result.user?.email, displayName: result.user?.displayName, localId: result.user?.uid } });
+      } else if (typeof result?.code === 'number') {
+        console.info("regreso un error", result);
+      } else {
+        console.error("No entro en if");
+      }
+    }).catch((error) => {
+      switch (error.message) {
+        case "Firebase: Error (auth/invalid-email).":
+          console.info("Correo invalido");
+          break;
+        case "Error (auth/wrong-password).":
+          console.info("Password incorrect");
+          break;
+        case "Firebase: Error (auth/user-not-found).":
+          console.info("Email not found");
+          break;
+      }
+      console.log(error.message);
+    });
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
@@ -34,6 +69,8 @@ const Login = ({ navigation }) => {
           placeholder="Email"
           placeholderTextColor="#ccc"
           style={styles.input}
+          value={email}
+          onChangeText={onHandlerEmail}
         />
         <TextInput
           autoCapitalize='none'
@@ -41,8 +78,10 @@ const Login = ({ navigation }) => {
           placeholderTextColor="#ccc"
           secureTextEntry
           style={styles.input}
+          value={password}
+          onChangeText={onHandlerPassword}
         />
-        <TouchableOpacity style={styles.login} >
+        <TouchableOpacity style={styles.login} onPress={loginWhitEmail} >
           <Text style={styles.loginLabel}>Entrar</Text>
         </TouchableOpacity>
       </View>
@@ -54,7 +93,7 @@ const Login = ({ navigation }) => {
             <Text style={{ borderColor: "#CCCCCC", borderStyle: "solid", borderBottomWidth: "2px", width: "40%", alignContent: 'center' }} />
           </View>
           <View style={{ textAlign: 'center' }}>
-            <TouchableOpacity style={styles.facebook} onPress={login}>
+            <TouchableOpacity style={styles.facebook} onPress={loginWhitFacebook}>
               <Text style={styles.facebookLabel}>Iniciar sesion  con Facebook</Text>
             </TouchableOpacity>
           </View>

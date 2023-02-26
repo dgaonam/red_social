@@ -1,8 +1,27 @@
-import { Text, View, TextInput, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { Text, View, TextInput, StyleSheet, TouchableOpacity, Image  } from 'react-native';
 import { useState } from "react"
+import { sendPasswordReset } from '../../config/auth';
+
+
+
 
 const Reset = () => {
-    const [email, setEmail] = useState('');
+    const [email, setEmail] = useState('isc.gaona@gmail.com');
+    const onHandlerEmail=(email)=>{
+        setEmail(()=>email);
+        console.info(email);
+    }
+
+    const sendEmail= async()=>{
+        let send = await sendPasswordReset(email);
+        if(send){
+            alert("Se envio corre electronico, favor de revisar el enlace y restablecer la contraseña");
+        }else{
+            alert("Ocurrio un erro al enviar el correo");
+        }
+        //console.log(send);
+      
+    }
 
     return (
         <View style={styles.container}>
@@ -17,8 +36,10 @@ const Reset = () => {
                     placeholder="Correo electronico"
                     placeholderTextColor="#CCCCCC"
                     style={styles.input}
+                    value={email}
+                onChangeText={onHandlerEmail}
                 />
-                <TouchableOpacity style={styles.register} >
+                <TouchableOpacity style={styles.register} onPress={sendEmail} >
                     <Text style={styles.registerLabel} >Enviar enlace de inicio de sesion</Text>
                 </TouchableOpacity>
             </View>
@@ -47,7 +68,7 @@ const styles = StyleSheet.create({
         width: 128,
         height: 128,
         borderRadius: 128 / 2,
-        borderStyle: "1px solid"
+        borderStyle: 1
     },
     uploadImageTitle: {
         fontWeight: 'bold',

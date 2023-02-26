@@ -1,19 +1,20 @@
 import { getDatabase, ref, set, get, child } from "firebase/database";
-import app from "./firebase";
-const writeUserData = (document, id, user, email, firstName, lastName) => {
+
+const writeUserData = (document, id, email, fullName,) => {
   const dbCurso = getDatabase();
   console.log(id);
+  let created = false;
   try {
     set(ref(dbCurso, document + '/' + id), {
-      username: user,
       email: email,
-      firstName: firstName,
-      lastName: lastName
+      fullName: fullName
     });
-    alert("Se registro de forma correcta");
+    created = true;
   } catch (e) {
     console.log(e);
+    created = false;
   }
+  return created;
 }
 
 const writeContacData = (document, id, userId, email, firstName, lastName, phone) => {
@@ -35,7 +36,7 @@ const writeContacData = (document, id, userId, email, firstName, lastName, phone
 
 const readUserData = async (document, userId) => {
   const dbRef = ref(getDatabase());
-  const resultado = await get(child(dbRef, document + `/${userId}`)).then((resultado)=>{
+  const resultado = await get(child(dbRef, document + `/${userId}`)).then((resultado) => {
     return (resultado.val());
   });
   return resultado;
