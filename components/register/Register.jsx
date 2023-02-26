@@ -18,13 +18,7 @@ const Register = () => {
             </TouchableOpacity>
             <TextInput
                 autoCapitalize='none'
-                placeholder="Nombre (s)"
-                placeholderTextColor="#CCCCCC"
-                style={styles.input}
-            />
-            <TextInput
-                autoCapitalize='none'
-                placeholder="Apellido (s)"
+                placeholder="Nombre (s) Apellido (s)"
                 placeholderTextColor="#CCCCCC"
                 style={styles.input}
             />

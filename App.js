@@ -75,19 +75,26 @@ export default function App() {
     <UserContext.Provider value={{ user, setUser }}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{
-               headerShown: true,
-              
-            }}>
+            headerTitleAlign: 'center',
+            headerStyle: {
+              backgroundColor: '#114358',
+            },
+            headerTintColor: '#FFFFFF',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color:"#FFFFFF"
+            }, headerShown: true
+          }} >
           <Stack.Screen
             name="Home"
             component={Tabs}
             
             options={({navigation})=>({
               headerTitle: () => (
-                <HeaderTitle />
+                <HeaderLeft />
             ),
               headerLeft: ()=>(
-                <HeaderLeft />
+                <HeaderTitle />
               ),
               headerRight: () =>(
                 <HeaderRight />

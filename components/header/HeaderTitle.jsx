@@ -1,12 +1,14 @@
 import React from 'react';
-import { TouchableOpacity, Image, Text } from 'react-native';
+import { TouchableOpacity, Image, Text, View } from 'react-native';
 
 
 const HeaderTitle = () => {
     return (
-        <TouchableOpacity style={{ flex: 1}} onPress={() => alert("pagina web")} >
-            <Text style={{color: "#000"}}>RedeSocial</Text>
+        <View style={{flex: 1, justifyContent: 'center'}}>
+        <TouchableOpacity  onPress={() => alert("pagina web")} >
+            <Text style={{color: "#FFFFFF"}}>RedeSocial</Text>
         </TouchableOpacity>
+        </View>
     );
 };
 export default HeaderTitle;

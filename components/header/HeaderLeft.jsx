@@ -1,13 +1,12 @@
 import React from 'react';
-import { TouchableOpacity, Image, Text } from 'react-native';
+import { TouchableOpacity, Image, Text, View } from 'react-native';
 
 
 const HeaderLeft = () => {
     return (
-        <TouchableOpacity style={{ flex: 1}} onPress={() => alert("chat")} >
-            <Image  source={require('../../assets/chat.png')} />
-            <Text style={{color: "#000"}}>Chat</Text>
-        </TouchableOpacity>
+        <View style={{flex: 1, justifyContent: "center"}}>
+        
+        </View>
     );
 };
 export default HeaderLeft;

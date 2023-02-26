@@ -1,13 +1,13 @@
 import React from 'react';
 import { Image, StyleSheet } from 'react-native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
 import Home from '../home/Home'; '../home/Home';
 import Notifications from '../notifications/Notifications';
 import Profiles from '../profiles/Profiles';
 import Search from '../search/Search';
 
-const Tab = createBottomTabNavigator();
+const Tab = createMaterialBottomTabNavigator();
 
 const Tabs = () => {
     return (
@@ -28,13 +28,12 @@ const Tabs = () => {
                 }
                 return null;
             },
-            tabBarLabelStyle: styles.tabBarLabelStyle,
-            tabBarActiveTintColor: '#3B82F6',
-            tabBarInactiveTintColor: '#000',
+            activeColor: "#f0edf6",
+            inactiveColor: "#3e2465",
             headerShown: false,
             unmountOnBlur: true,
         })}  barStyle={styles.tabBarBadgeStyle}>
-            <Tab.Screen name="Home" options={{ title: 'Inicio' }} component={Home} color={'#000'} />
+            <Tab.Screen name="Home" options={{ title: 'Inicio' }} component={Home} />
             <Tab.Screen name="Search" options={{ title: 'Buscar' }} component={Search} />
             <Tab.Screen name="Notifications" options={{ title: 'Notificaciones' }} component={Notifications} />
             <Tab.Screen name="Profile" options={{ title: 'Perfil' }} component={Profiles} />
@@ -44,18 +43,15 @@ const Tabs = () => {
 
 const styles = StyleSheet.create({
     tabBarIconStyle: {
-      width: 24,
-      height: 24,
-      borderRadius: 8
-      
+      width: 25,
+      height: 25,
     },  
     tabBarLabelStyle: {
       fontSize: 14,
-      fontWeight: 'bold',
-      
+      fontWeight: 'bold'
     },
     tabBarBadgeStyle: {
-        backgroundColor: "#000"
+        backgroundColor: "#114358"
     }
   });
 
