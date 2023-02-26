@@ -3,10 +3,27 @@ import { useState } from "react"
 import { FontAwesome } from '@expo/vector-icons';
 import { loginFacebook } from '../../config/auth';
 
+import UseUser from '../../hooks/UseUser';
+
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
+  const { user, setUser } = UseUser();
+
+  const login = async () => {
+    await loginFacebook().then(
+      (result) => {
+        console.info(result);
+        setUser({ session: true, data: { email: result.email, displayName: result.displayName,localId:result.uid } });
+        console.log(setUser);
+      }
+    ).catch((error) => {
+      console.error("Algo salio mal", error);
+    });
+    console.log(user);
+  }
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
@@ -37,20 +54,20 @@ const Login = ({ navigation }) => {
             <Text style={{ color: "#CCCCCC", justifyContent: 'flex-start', paddingLeft: 20, paddingRight: 20 }}>Or</Text>
             <Text style={{ borderColor: "#CCCCCC", borderStyle: "solid", borderBottomWidth: "2px", width: "40%", alignContent: 'center' }} />
           </View>
-          <View style={{textAlign: 'center'}}>
-            <TouchableOpacity style={styles.facebook} onPress={loginFacebook}>
+          <View style={{ textAlign: 'center' }}>
+            <TouchableOpacity style={styles.facebook} onPress={login}>
               <Text style={styles.facebookLabel}>Iniciar sesion  con Facebook</Text>
             </TouchableOpacity>
           </View>
-          <View style={{textAlign: 'center'}}>
-            <TouchableOpacity style={styles.facebook} onPress={()=>navigation.navigate('Reset')} >
+          <View style={{ textAlign: 'center' }}>
+            <TouchableOpacity style={styles.facebook} onPress={() => navigation.navigate('Reset')} >
               <Text style={styles.PasswordLabel}>¿ Olvidaste tu contraseña ?</Text>
             </TouchableOpacity>
           </View>
         </View>
       </View>
       <View style={styles.container}>
-        <TouchableOpacity style={{ flex: 1, flexDirection: 'row', justifyContent: 'center',borderColor: "#F1ECE7", borderWidth: "2px" }} onPress={()=>navigation.navigate('Register')} >
+        <TouchableOpacity style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', borderColor: "#F1ECE7", borderWidth: "2px" }} onPress={() => navigation.navigate('Register')} >
           <Text>¿No tienes cuenta?</Text>
           <Text style={{ paddingLeft: 10, color: "#1877F2" }}>Registrate</Text>
         </TouchableOpacity>
@@ -108,7 +125,7 @@ const styles = StyleSheet.create({
     paddingLeft: 30,
     textTransform: 'uppercase',
     fontSize: 12
-  },PasswordLabel: {
+  }, PasswordLabel: {
     color: '#114358',
     fontWeight: 'bold',
     paddingLeft: 30,
