@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
 import UserContext from "./context/UserContext";
@@ -11,20 +11,19 @@ import Login from "./components/login/Login";
 import Register from './components/register/Register';
 import Reset from './components/password/Reset';
 
-//
+
 
 export default function App() {
 
-  const Stack = createStackNavigator();
-
+  const Stack = createNativeStackNavigator();
   const user = {
 
   }
 
   return (
     <UserContext.Provider value={user}>
-      <NavigationContainer styles={styles.container}>
-        <Stack.Navigator initialRouteName="Login" screenOptions={{
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Login"  screenOptions={{
           headerTitleAlign: 'center',
           headerStyle: {
             backgroundColor: '#114358',
@@ -32,8 +31,8 @@ export default function App() {
           headerTintColor: '#FFFFFF',
           headerTitleStyle: {
             fontWeight: 'bold',
-          },
-        }} >
+          }, headerShown:true
+        }}  >
 
           <Stack.Screen
             name="Login"

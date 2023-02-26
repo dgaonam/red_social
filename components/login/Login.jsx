@@ -1,6 +1,7 @@
 import { Text, View, TextInput, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { useState } from "react"
 import { FontAwesome } from '@expo/vector-icons';
+import { loginFacebook } from '../../config/auth';
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -37,7 +38,7 @@ const Login = ({ navigation }) => {
             <Text style={{ borderColor: "#CCCCCC", borderStyle: "solid", borderBottomWidth: "2px", width: "40%", alignContent: 'center' }} />
           </View>
           <View style={{textAlign: 'center'}}>
-            <TouchableOpacity style={styles.facebook} >
+            <TouchableOpacity style={styles.facebook} onPress={loginFacebook}>
               <Text style={styles.facebookLabel}>Iniciar sesion  con Facebook</Text>
             </TouchableOpacity>
           </View>
