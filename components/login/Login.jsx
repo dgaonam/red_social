@@ -1,4 +1,4 @@
-import { Text, View, TextInput, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { Text, View, TextInput, StyleSheet, TouchableOpacity, Image,Alert } from 'react-native';
 import { useState } from "react"
 import { FontAwesome } from '@expo/vector-icons';
 import { loginFacebook } from '../../config/auth';
@@ -15,9 +15,8 @@ const Login = ({ navigation }) => {
   const login = async () => {
     await loginFacebook().then(
       (result) => {
-        console.info(result);
         setUser({ session: true, data: { email: result.email, displayName: result.displayName,localId:result.uid } });
-        console.log(setUser);
+        
       }
     ).catch((error) => {
       console.error("Algo salio mal", error);

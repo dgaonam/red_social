@@ -13,7 +13,12 @@ import Reset from './components/password/Reset';
 
 import Home from "./components/home/Home";
 
+import HeaderTitle from './components/header/HeaderTitle';
+
 import { useState } from 'react';
+import Tabs from './components/tabs/Tabs';
+import HeaderLeft from './components/header/HeaderLeft';
+import HeaderRight from './components/header/HeaderRight';
 
 
 
@@ -67,7 +72,32 @@ export default function App() {
   }
 
   return (
-    <Home />
+    <UserContext.Provider value={{ user, setUser }}>
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{
+               headerShown: true,
+              
+            }}>
+          <Stack.Screen
+            name="Home"
+            component={Tabs}
+            
+            options={({navigation})=>({
+              headerTitle: () => (
+                <HeaderTitle />
+            ),
+              headerLeft: ()=>(
+                <HeaderLeft />
+              ),
+              headerRight: () =>(
+                <HeaderRight />
+              )
+
+            })}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </UserContext.Provider>
   );
 }
 
