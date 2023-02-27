@@ -1,6 +1,7 @@
 # red_social
 <br>
 # Login de usuario<br>
+
 ![Captura desde 2023-02-26 21-34-16](https://user-images.githubusercontent.com/67657380/221467023-ab74dad3-eaa0-4d18-9ae0-e48b01d9d535.png)
 # Restablecer contraseña<br>
 ![Captura desde 2023-02-26 21-34-25](https://user-images.githubusercontent.com/67657380/221467060-19059b83-eb6e-4ffd-8a84-3b4e045f5580.png)
