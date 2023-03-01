@@ -2,15 +2,23 @@
 
 # Login 
 <br>
+
 ![Captura desde 2023-02-26 21-34-16](https://user-images.githubusercontent.com/67657380/222048904-6f7ff40c-cd7b-4497-a4d9-80d597f4bd7e.png)
+
 <br>
 # Restablecer contraseña 
+
 <br>
+
 ![Captura desde 2023-02-26 21-34-25](https://user-images.githubusercontent.com/67657380/222048936-6d083449-4661-42c3-b9f6-55a24730e432.png)
+
 <br>
 # Registro usuario con correo
+
 <br>
+
 ![Captura desde 2023-02-26 21-34-34](https://user-images.githubusercontent.com/67657380/222048968-e2849fd2-55c9-455a-9225-0f7f4ab2a395.png)
+
 <br>
 # Logueo con facebook 
 <br>
