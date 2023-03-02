@@ -1,13 +1,14 @@
 import { getDatabase, ref, set, get, child } from "firebase/database";
 
-const writeUserData = (document, id, email, fullName,) => {
+const writeUserData = (document, id, email, fullName,avatar_url) => {
   const dbCurso = getDatabase();
   console.log(id);
   let created = false;
   try {
     set(ref(dbCurso, document + '/' + id), {
       email: email,
-      fullName: fullName
+      fullName: fullName,
+      avatar_url: avatar_url
     });
     created = true;
   } catch (e) {

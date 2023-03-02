@@ -72,18 +72,22 @@ const Cam = () => {
         <Camera style={styles.camera} type={type} flashMode={flash} ref={cameraReferencia}>
 
           <View style={styles.buttonContainer}>
-            <FontAwesome name={"refresh"} color={"#CCC"} size={24} onPress={() => { setType(type === CameraType.back ? CameraType.front : CameraType.back) }} />
+            <FontAwesome name={"refresh"} color={"#FFFFFF"} size={24} onPress={() => { setType(type === CameraType.back ? CameraType.front : CameraType.back) }} />
 
           </View>
         </Camera> : <View style={styles.camera}>
-          <Image source={image} />
+          <Image style={styles.image} source={image} />
         </View>
       }
       <View style={styles.buttonPanel}>
-        {image === null ? (<FontAwesome name={"camera"} color={"#CCC"} size={24} onPress={tomarFoto} />)
+        {image === null ? (<FontAwesome style={{backgroundColor:"#114358"}} name={"camera"} color={"#CCC"} size={24} onPress={tomarFoto} />)
           : (<View style={styles.buttonPanel}>
-            <FontAwesome name={"save"} color={"#CCC"} size={24} onPress={save} />
-            <FontAwesome name={"trash"} color={"#CCC"} size={24} onPress={() => { setImage(null) }} />
+            <View>
+            <FontAwesome style={{backgroundColor:"#114358"}} name={"save"} color={"#CCC"} size={24} onPress={save} />
+            </View>
+            <View>
+            <FontAwesome style={{backgroundColor:"#114358"}} name={"trash"} color={"#CCC"} size={24} onPress={() => { setImage(null) }} />
+            </View>
           </View>)}
       </View>
     </View>
@@ -105,7 +109,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 10,
     margin: 10,
-
   },
 
   camera: {

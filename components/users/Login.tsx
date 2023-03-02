@@ -2,6 +2,7 @@ import { Text, View, TextInput, StyleSheet, TouchableOpacity, Image, ActivityInd
 import { useState } from "react"
 
 import { loginFacebook, login } from '../../config/auth';
+import { readUserData } from '../../config/database';
 
 import UseUser from '../../hooks/UseUser';
 
@@ -37,10 +38,11 @@ const Login = ({ navigation }) => {
 
   const loginWhitEmail = async () => {
     setIsLoading(true);
-    await login(email, password).then((result) => {
+    await login(email, password).then(async(result) => {
       console.info(result);
       if (typeof result.user?.email !== 'undefined') {
-        setUser({ session: true, data: { email: result.user?.email, displayName: result.user?.displayName, localId: result.user?.uid } });
+        let avatar_url = await readUserData("users",result.user?.uid );
+        setUser({ session: true, data: { email: result.user?.email, displayName: avatar_url.fullName, localId: result.user?.uid, avatar_url: avatar_url.avatar_url } });
         setIsLoading(false);
       } else if (typeof result?.code === 'number') {
         console.info("regreso un error", result);

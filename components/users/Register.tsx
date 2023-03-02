@@ -1,7 +1,9 @@
-import { Text, View, TextInput, StyleSheet, TouchableOpacity, Image,Alert,ActivityIndicator } from 'react-native';
+import { Text, View, TextInput, StyleSheet, TouchableOpacity, Image, Alert, ActivityIndicator,Platform } from 'react-native';
 import { useState } from "react"
+import * as ImagePicker from 'expo-image-picker';
 import { userCreate } from '../../config/auth';
 import { writeUserData } from '../../config/database';
+import { upload } from '../../config/storage';
 
 import UseUser from '../../hooks/UseUser';
 
@@ -16,50 +18,69 @@ const Register = () => {
 
     const [isLoading, setIsLoading] = useState(false);
 
-    const onHandlerEmail=(email)=>{
-        setEmail(()=>email);
+    const onHandlerEmail = (email) => {
+        setEmail(() => email);
         console.info(email);
     }
-    const onHandlerPassword=(password)=>{
-        setPassword(()=>password);
+    const onHandlerPassword = (password) => {
+        setPassword(() => password);
         console.info(password);
     }
-    const onHandlerPasswordConfirm=(confirmPassword)=>{
-        confirmPassword(()=>confirmPassword);
+    const onHandlerPasswordConfirm = (confirmPassword) => {
+        confirmPassword(() => confirmPassword);
     }
-    const onHandlerFullName=(fullName)=>{
-        setFullName(()=>fullName);
+    const onHandlerFullName = (fullName) => {
+        setFullName(() => fullName);
+    }
+
+    const avatar_selectAvatar = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [3, 3],
+            quality: 1,
+        });
+
+        console.log(result);
+
+        if (!result.canceled) {
+            console.log(Platform.OS,result.assets[0]);
+            setUserAvatar({name:"",uri: result.assets[0].uri,type:"image/jpg"});
+          }
     }
 
     if (isLoading) {
         return (
-          <View style={styles.container}>
-            <ActivityIndicator size="large" color="#3B82F6" />
-          </View>
+            <View style={styles.container}>
+                <ActivityIndicator size="large" color="#3B82F6" />
+            </View>
         );
-      }
+    }
 
-    const RegisterNewUser= async()=>{
+    const RegisterNewUser = async () => {
         setIsLoading(true);
-        await userCreate(email,password).then( async(result)=> {
+        await userCreate(email, password).then(async (result) => {
             console.info(result);
-            let created = await writeUserData("user",result.uid,email,fullName);
-            if(created===true){
-                setUser({ session: true, data: { email: result.email, displayName: fullName, localId: result.uid } });
+            let avatar_url = await upload("image/jpeg" ,userAvatar, result.uid);
+            let created = await writeUserData("users", result.uid, email, fullName,avatar_url);
+            console.info(created);
+            if (created === true) {
+                
+                setUser({ session: true, data: { email: result.email, displayName: fullName, localId: result.uid,avatar_url:avatar_url } });
                 Alert.alert(
                     "Registro de usuarios",
                     "Registrado de forma correcta"
-                  );
-                  setIsLoading(false);
-            }else{
+                );
+                setIsLoading(false);
+            } else {
                 Alert.alert(
                     "Registro de usuarios",
                     "No se logro registrar al usuario"
-                  );
-                  setIsLoading(false);
+                );
+                setIsLoading(false);
             }
-            
-        }).catch((error)=>{
+
+        }).catch((error) => {
             console.error(error);
             setIsLoading(false);
         });
@@ -67,8 +88,8 @@ const Register = () => {
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity style={styles.uploadContainer} >
-                <Image style={styles.uploadImageIcon} source={require('../../assets/adaptive-icon.png')} />
+            <TouchableOpacity style={styles.uploadContainer} onPress={avatar_selectAvatar}>
+                <Image style={styles.uploadImageIcon} source={ !userAvatar ? require('../../assets/adaptive-icon.png'): userAvatar} />
                 <Text style={styles.uploadImageTitle}>Subir avatar</Text>
             </TouchableOpacity>
             <TextInput
@@ -123,11 +144,13 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+       
     },
     uploadImageIcon: {
         width: 100,
-        height: 100
+        height: 100,
+        borderRadius: 42 / 2
     },
     userAvatar: {
         width: 128,
@@ -163,6 +186,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         textTransform: 'uppercase',
     },
+    
 });
 
 export default Register;

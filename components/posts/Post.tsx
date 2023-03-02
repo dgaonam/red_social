@@ -1,4 +1,4 @@
-import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Share, View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 
@@ -6,32 +6,59 @@ const content_post = (type, url) => {
 
     if (type == 'image') {
         return (
-           <View style={styles.listItemBody}>
-                <Image style={styles.listItemImage} source={{ uri:url }} />
-           </View> 
+            <View style={styles.listItemBody}>
+                <Image style={styles.listItemImage} source={{ uri: url }} />
+            </View>
         );
     }
-};
+}
+
+const share_post = async () => {
+    try {
+        const result = await Share.share({
+            message:
+                'React Native | A framework for building native apps using React',
+        });
+        if (result.action === Share.sharedAction) {
+            if (result.activityType) {
+                // shared with activity type of result.activityType
+            } else {
+                // shared
+            }
+        } else if (result.action === Share.dismissedAction) {
+            // dismissed
+        }
+    } catch (error) {
+        alert(error.message);
+    }
+
+}
+
 
 const Post = ({ post }) => {
     return (
         <TouchableOpacity style={styles.listItem} key={post.id}>
             <View style={styles.listItemHeader}>
                 <View style={styles.listItemAuthorAvatarContainer}>
-                    <Image style={styles.listItemAuthorAvatar} source={{ uri: require("../../assets/dgaonam.jpg") }} />
+                    <Image style={styles.listItemAuthorAvatar} source={{ uri: post.avatar_url }} />
                 </View>
                 <Text style={styles.listItemAuthorName}>{post.author}</Text>
-                <View>
-                
-                </View>
+            </View>
+            <View style={styles.listItemHeader}>
+                <Text>{post.place}</Text>
             </View>
             {content_post(post.type, post.picture_url)}
             <View style={styles.listItemFooter}>
-                <TouchableOpacity >
-                    <FontAwesome style={styles.listItemFooterImage} name={"heart"} color={"#CCC"} size={24} onPress={()=>{alert("Me gusta")}} />
-                </TouchableOpacity>
-                <FontAwesome style={styles.listItemFooterImage} name={"commenting"} color={"#CCC"} size={24} onPress={()=>{alert("añadir comentario")}}/>
-                <FontAwesome style={styles.listItemFooterImage} name={"share-alt"} color={"#CCC"} size={24} onPress={()=>{alert("compartir")}}/>
+                <View style={styles.listItemHastag}>
+                   
+                </View>
+                <View style={styles.listItemActions}>
+                    <TouchableOpacity >
+                        <FontAwesome style={styles.listItemFooterImage} name={"heart"} color={"#CCC"} size={24} onPress={() => { alert("Me gusta") }} />
+                    </TouchableOpacity>
+                    <FontAwesome style={styles.listItemFooterImage} name={"commenting"} color={"#CCC"} size={24} onPress={() => { alert("añadir comentario") }} />
+                    <FontAwesome style={styles.listItemFooterImage} name={"share-alt"} color={"#CCC"} size={24} onPress={share_post} />
+                </View>
             </View>
         </TouchableOpacity>
     );
@@ -80,7 +107,8 @@ const styles = StyleSheet.create({
     },
     listItemBody: {
         flex: 1,
-        minHeight: 320
+        minHeight: 320,
+        padding: 5
     },
     listItemImage: {
         aspectRatio: 1,
@@ -97,22 +125,29 @@ const styles = StyleSheet.create({
         right: 0,
         top: 0,
     },
+    listItemHastag: {
+        padding: 8,
+        flexDirection: 'row',
+        color: '#1877F2',
+        width: "80%",
+
+    },
+    listItemActions: {
+        width: "20%",
+        flexDirection: "row",
+        paddingTop: 2,
+    },
     listItemFooter: {
         padding: 8,
-        paddingLeft: 30,
+        paddingLeft: 5,
         flexDirection: 'row',
-        justifyContent: 'flex-end'
+
     },
     listItemFooterImage: {
         width: 28,
         height: 28
     },
-    gap: {
-        marginRight: 12
-    },
-    gap2: {
-        marginRight: 8
-    }
+
 });
 
 export default Post;

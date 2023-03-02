@@ -24,6 +24,7 @@ export default function App() {
       email: "",
       displayName: "",
       localId: "",
+      avatar_url: ""
     }
   });
 

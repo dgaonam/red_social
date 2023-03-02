@@ -1,4 +1,4 @@
-import { Text, View } from "react-native";
+import { Image, Text, View } from "react-native";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
@@ -8,9 +8,12 @@ import Notifications from "../notifications/Notifications";
 import Profiles from "../users/Profiles";
 import Cam from "../posts/Cam";
 
+import UseUser from '../../hooks/UseUser';
+
 const TMenuBottom = createBottomTabNavigator();
 
 const Tabs = () => {
+    const { user, setUser } = UseUser();
     return (
         <>
         <TMenuBottom.Navigator 
@@ -26,7 +29,13 @@ const Tabs = () => {
                         default: icon="xmark"; break;
                     }
                     
-                    return <FontAwesome name={icon} color={color} size={size} />;
+                    if(route.name.toLocaleLowerCase()==='profile') {
+                        console.info(user.data.avatar_url)
+                        return <Image style={{height: 38, width: 38,borderRadius: 42 / 2 }} source={user.data.avatar_url}  />
+                    }else{
+                        return <FontAwesome name={icon} color={color} size={size} />;
+                    }
+                    
                   
                 },
                 Headers:false,
