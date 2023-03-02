@@ -1,6 +1,8 @@
 {
   "expo": {
     "name": "practica_final",
+    "autor": "Daniel Alejandro Gaona Mercado",
+    "git":"https://github.com/dgaonam/red_social.git",
     "slug": "practica_final",
     "version": "1.0.0",
     "orientation": "portrait",
