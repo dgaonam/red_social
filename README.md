@@ -17,7 +17,8 @@
 
 <br>
 
-![Captura desde 2023-02-26 21-34-34](https://user-images.githubusercontent.com/67657380/222048968-e2849fd2-55c9-455a-9225-0f7f4ab2a395.png)
+![Captura desde 2023-03-01 22-56-12](https://user-images.githubusercontent.com/67657380/222334999-52fe0fe9-550f-4bf5-b65c-06a4b5d6e19c.png)
+
 
 <br>
 # Logueo con facebook 
@@ -29,10 +30,19 @@
 # Navegacion 
 <br>
 
-![Captura desde 2023-02-28 23-02-46](https://user-images.githubusercontent.com/67657380/222049295-4c335f74-999c-4dab-8777-af03adba763b.png)
+![Captura desde 2023-03-01 22-56-25](https://user-images.githubusercontent.com/67657380/222335039-a208280b-419d-494a-8e87-f7f0bbf536b3.png)
+
 
 <br>
 # Captura foto
 <br>
 
 ![Captura desde 2023-02-28 23-03-02](https://user-images.githubusercontent.com/67657380/222049362-379dd518-40a7-4188-b4b2-a2118c6f0679.png)
+
+<br>
+
+# Perfil 
+<br>
+
+![Captura desde 2023-03-01 22-56-32](https://user-images.githubusercontent.com/67657380/222335093-990b1ccc-ad9c-4a45-900f-5818585758d4.png)
+
