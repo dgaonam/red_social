@@ -44,5 +44,6 @@
 # Perfil 
 <br>
 
-![Captura desde 2023-03-01 22-56-32](https://user-images.githubusercontent.com/67657380/222335093-990b1ccc-ad9c-4a45-900f-5818585758d4.png)
+![WhatsApp Image 2023-03-02 at 21 58 45](https://user-images.githubusercontent.com/67657380/222628177-9d4d376e-d8aa-4fdc-8945-d72cc99d608c.jpeg)
+
 
