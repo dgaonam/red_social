@@ -8,7 +8,7 @@ const HeaderLeft = ({navigation}) => {
     //const { user, setUser } = UseUser();
     return (
         <View style={styles.container}>
-            <Text style={styles.Logo}>{process.env.NAME}</Text>
+            <Text style={styles.Logo}></Text>
         </View>
     );
 };
@@ -17,13 +17,14 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       flexDirection: "row",
-      alignItems: 'center',
+      alignItems: 'flex-start',
       justifyContent: 'space-around',
-      marginLeft: 0,
-      marginRight: 50
+      marginLeft: 1,
+      marginRight: 30,
+      padding: 5
     },
     Logo: {
-        fontSize: 30,
+        fontSize: 24,
         fontWeight: "bold",
         color: "#FFFFFF"
     }

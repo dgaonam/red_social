@@ -5,7 +5,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { FontAwesome } from '@expo/vector-icons';
 
 
-const Cam = () => {
+const Cam = ({ navigation }) => {
   const [type, setType] = useState(CameraType.back);
   const [permisos, setPermisos] = Camera.useCameraPermissions();
   const [image, setImage] = useState(null);
@@ -80,14 +80,20 @@ const Cam = () => {
         </View>
       }
       <View style={styles.buttonPanel}>
-        {image === null ? (<FontAwesome style={{backgroundColor:"#114358"}} name={"camera"} color={"#CCC"} size={24} onPress={tomarFoto} />)
-          : (<View style={styles.buttonPanel}>
-            <View>
-            <FontAwesome style={{backgroundColor:"#114358"}} name={"save"} color={"#CCC"} size={24} onPress={save} />
-            </View>
-            <View>
-            <FontAwesome style={{backgroundColor:"#114358"}} name={"trash"} color={"#CCC"} size={24} onPress={() => { setImage(null) }} />
-            </View>
+        {image === null ? (
+            <TouchableOpacity style={{ flex:1, backgroundColor: "#114358",flexDirection:'row', justifyContent:'center',padding:10,alignItems:'center',borderRadius: 8 }} onPress={tomarFoto}>
+            <FontAwesome style={{paddingRight: 15}} name={"camera"} color={"#FFFFFF"} size={24}  /><Text style={{color:"#FFFFFF"}}>Tomar Foto</Text>
+            </TouchableOpacity>
+            )
+          : (<View style={{flex:1, flexDirection: 'row', padding: 5 }}>
+            <TouchableOpacity style={{ flex:1, backgroundColor: "#114358",flexDirection:'row', justifyContent:'center',padding:10,alignItems:'center',borderRadius: 8, marginRight: 5,}} onPress={save}>
+              <FontAwesome style={{paddingRight: 15}} name={"save"} color={"#FFF"} size={24} onPress={save} />
+              <Text style={{color:"#FFFFFF"}}>Guardar</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={{ flex:1, backgroundColor: "#114358",flexDirection:'row', justifyContent:'center',padding:10,alignItems:'center',borderRadius: 8 }} onPress={() => { setImage(null) }}>
+              <FontAwesome style={{paddingRight: 15}} name={"trash"} color={"#FFF"} size={24} onPress={() => { setImage(null) }} />
+              <Text style={{color:"#FFFFFF"}}>Descartar</Text>
+            </TouchableOpacity>
           </View>)}
       </View>
     </View>
@@ -97,7 +103,7 @@ const Cam = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 10,
+    flex: 1,
     backgroundColor: '#FFF',
     alignItems: 'center',
     justifyContent: 'center',
@@ -112,7 +118,7 @@ const styles = StyleSheet.create({
   },
 
   camera: {
-    flex: 9,
+    flex: 10,
     width: '98%',
 
   },
@@ -130,6 +136,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: 'transparent',
     textAlign: 'center',
+    margin: 10,
+    padding: 10,
+    width:"50%"
 
   },
   imageContainer: {

@@ -31,7 +31,7 @@ const Tabs = () => {
                     
                     if(route.name.toLocaleLowerCase()==='profile') {
                         console.info(user.data.avatar_url)
-                        return <Image style={{height: 38, width: 38,borderRadius: 42 / 2 }} source={user.data.avatar_url}  />
+                        return <Image style={{height: 38, width: 38,borderRadius: 42 / 2 }} source={{uri: user.data.avatar_url}}  />
                     }else{
                         return <FontAwesome name={icon} color={color} size={size} />;
                     }

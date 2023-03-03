@@ -1,13 +1,15 @@
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
-import React,{ useState } from 'react';
+import React,{ useState,useEffect } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import { View, Image, Text, StyleSheet, TouchableOpacity, ScrollView,Platform } from 'react-native';
+import * as MediaLibrary from 'expo-media-library';
 import UseUser from '../../hooks/UseUser';
-import Home from '../home/Home';
+import Posts from '../posts/Posts';
 
 const Profiles = () => {
     const { user, setUser } = UseUser();
     const [userAvatar, setUserAvatar] = useState(null);
+    const [data,setData] = useState([]);    
 
     const avatar_selectAvatar = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -24,6 +26,26 @@ const Profiles = () => {
             setUserAvatar({name:"",uri: result.assets[0].uri,type:"image/jpg"});
           }
     }
+    const albune_search=async()=>{
+        const permiso = await MediaLibrary.requestPermissionsAsync()
+        if (permiso.granted) {
+        
+            MediaLibrary.getAssetsAsync({
+                mediaType: ["video", "photo"],
+            }).then((data) => {
+                setData(data.assets.map((asset)=>{
+                    return {
+                      id: asset.albumId,
+                      picture_url: asset.uri
+                    }
+                  }));
+            }).catch((e) => console.log(e));
+        }
+     };
+    
+     useEffect(() => {
+        albune_search();
+      }, []);
 
     return (
         <ScrollView style={styles.scrollViewContainer}>
@@ -42,7 +64,7 @@ const Profiles = () => {
                 </View>
             </View>
             <View>
-                <Home isGrid={true} />
+                <Posts isGrid={true} posts={data} />
             </View>
         </ScrollView>
     );

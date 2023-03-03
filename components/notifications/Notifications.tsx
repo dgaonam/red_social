@@ -1,12 +1,12 @@
+import {Text, View } from "react-native";
 
 
 
-
-const Notifications =()=>{
+const Notifications =({ navigation })=>{
     return(
-    <>
-       Notifications component
-    </>
+    <View>
+       <Text>Notifications component</Text>
+    </View>
     );
 };
 

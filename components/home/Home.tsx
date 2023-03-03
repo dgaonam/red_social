@@ -3,12 +3,13 @@ import { View, Image, FlatList, TouchableOpacity, StyleSheet, StatusBar, SafeAre
 
 import { useState } from "react"
 import Post from '../posts/Post';
+import Posts from '../posts/Posts';
 
 const DATA = [
   {
     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
     author: "dgaonam",
-    avatar_url: "https://firebasestorage.googleapis.com/v0/b/curso-f876a.appspot.com/o/users%2F3kT4DOs9qJWZzhFbNfHE3tjj6IH3.jpg?alt=media&token=7d29d6d6-9bdd-43e5-9644-8f14d5b4e908",
+    avatar_url: "https://firebasestorage.googleapis.com/v0/b/curso-f876a.appspot.com/o/users%2FWxpf93dtAbdWGCtr93q6EagSEo32.jpg?alt=media&token=b019d7ec-110f-49d3-9a83-7894effb2996",
     type: "image",
     picture_url: "https://picsum.photos/320/440",
     like: 5,
@@ -19,7 +20,7 @@ const DATA = [
   {
     id: 'bd7acbea-c1b1-36c2-aed5-3ad53abb28ba',
     author: "dgaonam",
-    avatar_url: "https://firebasestorage.googleapis.com/v0/b/curso-f876a.appspot.com/o/users%2F3kT4DOs9qJWZzhFbNfHE3tjj6IH3.jpg?alt=media&token=7d29d6d6-9bdd-43e5-9644-8f14d5b4e908",
+    avatar_url: "https://firebasestorage.googleapis.com/v0/b/curso-f876a.appspot.com/o/users%2FWxpf93dtAbdWGCtr93q6EagSEo32.jpg?alt=media&token=b019d7ec-110f-49d3-9a83-7894effb2996",
     type: "image",
     picture_url: "https://picsum.photos/320/440",
     like: 25,
@@ -30,7 +31,7 @@ const DATA = [
   {
     id: 'bd7acbea-c1b1-26c2-aed5-3ad53abb28ba',
     author: "dgaonam",
-    avatar_url: "https://firebasestorage.googleapis.com/v0/b/curso-f876a.appspot.com/o/users%2F3kT4DOs9qJWZzhFbNfHE3tjj6IH3.jpg?alt=media&token=7d29d6d6-9bdd-43e5-9644-8f14d5b4e908",
+    avatar_url: "https://firebasestorage.googleapis.com/v0/b/curso-f876a.appspot.com/o/users%2FWxpf93dtAbdWGCtr93q6EagSEo32.jpg?alt=media&token=b019d7ec-110f-49d3-9a83-7894effb2996",
     type: "image",
     picture_url: "https://picsum.photos/320/440",
     like: 52,
@@ -41,7 +42,7 @@ const DATA = [
   {
     id: 'bd7acbea-c1b1-26c2-aed5-3ad53abb28ba',
     author: "dgaonam",
-    avatar_url: "https://firebasestorage.googleapis.com/v0/b/curso-f876a.appspot.com/o/users%2F3kT4DOs9qJWZzhFbNfHE3tjj6IH3.jpg?alt=media&token=7d29d6d6-9bdd-43e5-9644-8f14d5b4e908",
+    avatar_url: "https://firebasestorage.googleapis.com/v0/b/curso-f876a.appspot.com/o/users%2FWxpf93dtAbdWGCtr93q6EagSEo32.jpg?alt=media&token=b019d7ec-110f-49d3-9a83-7894effb2996",
     type: "image",
     picture_url: "https://picsum.photos/320/440",
     like: 52,
@@ -51,35 +52,10 @@ const DATA = [
   },
 ];
 
-const Home = ({ isGrid }) => {
-  const [posts, setPosts] = useState();
-  const [selectedId, setSelectedId] = useState();
-
-  const renderItem = ({ item }) => {
-
-    if (isGrid) {
-      return (<TouchableOpacity style={styles.imagePostContainer} >
-        <Image style={styles.imagePost} source={{ uri: item.picture_url }} />
-      </TouchableOpacity>);
-    } else {
-      return (
-        <Post post={item} />
-      );
-    }
-
-  };
+const Home = ({ navigation }) => {
 
   return (
-    <SafeAreaView style={styles.container}>
-      <FlatList
-        data={DATA}
-        numColumns={isGrid ? 3 : 1}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-        extraData={selectedId}
-      />
-
-    </SafeAreaView>
+    <Posts isGrid={false} posts={DATA} />
   );
 };
 
@@ -87,21 +63,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: StatusBar.currentHeight || 0,
-  },
-  item: {
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
-  },
-  title: {
-    fontSize: 32,
-  },
-  imagePostContainer: {
-    flex: 1
-  },
-  imagePost: {
-    flex: 1,
-    aspectRatio: 1
   },
 });
 

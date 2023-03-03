@@ -44,7 +44,7 @@ const Register = () => {
         console.log(result);
 
         if (!result.canceled) {
-            console.log(Platform.OS,result.assets[0]);
+            //console.log(Platform.OS,result.assets[0]);
             setUserAvatar({name:"",uri: result.assets[0].uri,type:"image/jpg"});
           }
     }

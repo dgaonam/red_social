@@ -1,10 +1,10 @@
-
+import {Text, View } from "react-native";
 
 const Search =()=>{
     return(
-    <>
-       Search component
-    </>
+        <View>
+        <Text>Search component</Text>
+     </View>
     );
 };
 

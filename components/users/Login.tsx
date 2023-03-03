@@ -39,7 +39,7 @@ const Login = ({ navigation }) => {
   const loginWhitEmail = async () => {
     setIsLoading(true);
     await login(email, password).then(async(result) => {
-      console.info(result);
+      //console.info(result);
       if (typeof result.user?.email !== 'undefined') {
         let avatar_url = await readUserData("users",result.user?.uid );
         setUser({ session: true, data: { email: result.user?.email, displayName: avatar_url.fullName, localId: result.user?.uid, avatar_url: avatar_url.avatar_url } });
@@ -106,9 +106,9 @@ const Login = ({ navigation }) => {
       <View style={styles.container}>
         <View style={{ justifyContent: 'center', alignContent: 'center' }}>
           <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
-            <Text style={{ borderColor: "#CCCCCC", borderStyle: "solid", borderBottomWidth: "2px", width: "40%", alignContent: 'center' }} />
+            <Text style={{ borderColor: "#CCCCCC", borderStyle: "solid", borderBottomWidth: 2, width: "40%", alignContent: 'center' }} />
             <Text style={{ color: "#CCCCCC", justifyContent: 'flex-start', paddingLeft: 20, paddingRight: 20 }}>Or</Text>
-            <Text style={{ borderColor: "#CCCCCC", borderStyle: "solid", borderBottomWidth: "2px", width: "40%", alignContent: 'center' }} />
+            <Text style={{ borderColor: "#CCCCCC", borderStyle: "solid", borderBottomWidth: 2, width: "40%", alignContent: 'center' }} />
           </View>
           <View style={{ textAlign: "center" }}>
             <TouchableOpacity style={styles.facebook} onPress={loginWhitFacebook}>
@@ -123,7 +123,7 @@ const Login = ({ navigation }) => {
         </View>
       </View>
       <View style={styles.container}>
-        <TouchableOpacity style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', borderColor: "#F1ECE7", borderWidth: "2px" }} onPress={() => navigation.navigate('Register')} >
+        <TouchableOpacity style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', borderColor: "#F1ECE7", borderWidth: 2 }} onPress={() => navigation.navigate('Register')} >
           <Text>¿No tienes cuenta?</Text>
           <Text style={{ paddingLeft: 10, color: "#1877F2" }}>Registrate</Text>
         </TouchableOpacity>
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
   }, logoImagen: {
     width: 200,
     height: 200,
-    paddingBottom: '10px',
+    paddingBottom: 10,
   }, logoContainer: {
     display: 'flex',
     flexDirection: 'row',

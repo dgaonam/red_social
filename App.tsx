@@ -11,8 +11,8 @@ import Register from './components/users/Register';
 import ResetPassword from './components/users/ResetPassword';
 
 import Tabs from './components/home/Tabs';
+
 import HeaderRight from './components/header/HeaderRight';
-import HeaderLeft from './components/header/HeaderLeft';
 
 const Stack = createNativeStackNavigator();
 
@@ -93,7 +93,7 @@ export default function App() {
                   <HeaderRight />
                 ),
                 headerTitle: () => (
-                  <HeaderLeft />
+                  <></>
                 )
               })
             }
