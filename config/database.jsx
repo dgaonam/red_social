@@ -1,4 +1,4 @@
-import { getDatabase, ref, set, get, child } from "firebase/database";
+import { getDatabase, ref, set, get, child,databaseOff,databaseOnValue } from "firebase/database";
 
 const writeUserData = (document, id, email, fullName,avatar_url) => {
   const dbCurso = getDatabase();
@@ -18,20 +18,25 @@ const writeUserData = (document, id, email, fullName,avatar_url) => {
   return created;
 }
 
-const writeContacData = (document, id, userId, email, firstName, lastName, phone) => {
+const writePostData = async(document, {id="",userId="", author="", avatar_url="",type="",picture_url="",like=0,description="",place=""}) => {
   const dbCurso = getDatabase();
   console.log(id);
   try {
     set(ref(dbCurso, document + '/' + id), {
       userId: userId,
-      email: email,
-      firstName: firstName,
-      lastName: lastName,
-      phone: phone
+      author: author,
+      avatar_url: avatar_url,
+      type: type,
+      picture_url: picture_url,
+      like: like,
+      description:description,
+      place:place,
+    
     });
-    alert("Se registro de forma correcta");
+    return true;
   } catch (e) {
     console.log(e);
+    return false;
   }
 }
 
@@ -42,4 +47,12 @@ const readUserData = async (document, userId) => {
   });
   return resultado;
 }
-export { writeUserData, writeContacData, readUserData };
+
+const readPostData =  async(document) => {
+  const dbRef = ref(getDatabase());
+  const resultado = await  get(child(dbRef, document )).then((posts)=>{
+    return posts.val();
+  })
+  return resultado;
+}
+export { writeUserData, writePostData, readUserData,readPostData };

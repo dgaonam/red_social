@@ -13,11 +13,15 @@ const content_post = (type, url) => {
     }
 }
 
-const share_post = async () => {
+const share_post = async (id,file,autor) => {
     try {
+        const localFile = await fetch(file);
+        console.info("localfile ",localFile);
+        const fileBlob = await localFile.blob();
+        console.info("fileblob ",localFile);
         const result = await Share.share({
-            message:
-                'React Native | A framework for building native apps using React',
+            message: "archivo",
+            url: `${file.url}`,
         });
         if (result.action === Share.sharedAction) {
             if (result.activityType) {
@@ -37,7 +41,8 @@ const share_post = async () => {
 
 const Post = ({ post }) => {
     return (
-        <TouchableOpacity style={styles.listItem} key={post.id}>
+        
+        <TouchableOpacity style={styles.listItem} >
             <View style={styles.listItemHeader}>
                 <View style={styles.listItemAuthorAvatarContainer}>
                     <Image style={styles.listItemAuthorAvatar} source={{ uri: post.avatar_url }} />
@@ -57,7 +62,7 @@ const Post = ({ post }) => {
                         <FontAwesome style={styles.listItemFooterImage} name={"heart"} color={"#CCC"} size={24} onPress={() => { alert("Me gusta") }} />
                     </TouchableOpacity>
                     <FontAwesome style={styles.listItemFooterImage} name={"commenting"} color={"#CCC"} size={24} onPress={() => { alert("añadir comentario") }} />
-                    <FontAwesome style={styles.listItemFooterImage} name={"share-alt"} color={"#CCC"} size={24} onPress={share_post} />
+                    <FontAwesome style={styles.listItemFooterImage} name={"share-alt"} color={"#CCC"} size={24} onPress={(e)=>{share_post(post.id, post.picture_url, post.author)}} />
                 </View>
             </View>
         </TouchableOpacity>

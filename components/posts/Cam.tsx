@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import * as MediaLibrary from 'expo-media-library';
 import { Camera, CameraType } from 'expo-camera';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { FontAwesome } from '@expo/vector-icons';
+import { MaterialIcons,FontAwesome } from '@expo/vector-icons';
 
 
 const Cam = ({ navigation }) => {
@@ -24,7 +24,7 @@ const Cam = ({ navigation }) => {
     if (cameraReferencia) {
       try {
         const data = await cameraReferencia.current.takePictureAsync();
-        setImage(data.uri);
+        setImage(data);
       } catch (error) {
         console.log(error);
       }
@@ -34,17 +34,19 @@ const Cam = ({ navigation }) => {
   const save = async () => {
     if (image) {
       try {
-        const asset = await MediaLibrary.createAssetAsync(image);
-        MediaLibrary.createAlbumAsync('Expo', asset)
+        const asset = await MediaLibrary.createAssetAsync(image.uri);
+        MediaLibrary.createAlbumAsync('redes_sociales', asset)
           .then(() => {
             console.log('Album created!');
             setImage(null);
+            alert("Imagen guardada de forma correctamente!");
           })
           .catch(error => {
             console.log('err', error);
           })
       } catch (error) {
-        console.log(error);
+        console.log("Error crear albun ",error);
+        console.info("Imagen ",image);
       }
     } else {
       alert("No image selected");
@@ -58,9 +60,10 @@ const Cam = ({ navigation }) => {
   if (!permisos.granted) {
     return (
       <View style={styles.container}>
-        <Text style={{ textAlign: 'center' }}>Necesitas permisos para acceder a la camara </Text>
-        <TouchableOpacity >
-          <FontAwesome name={"heart"} color={"#CCC"} size={24} onPress={() => { alert("Me gusta") }} />
+        
+        <TouchableOpacity onPress={() => { alert("Me gusta") }}>
+          <MaterialIcons name={"perm-device-info"} color={"#CCC"} size={24}  />
+          <Text style={{ textAlign: 'center' }}>Necesitas permisos para acceder a la camara </Text>
         </TouchableOpacity>
       </View>
     );
@@ -68,6 +71,7 @@ const Cam = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      
       {image === null ?
         <Camera style={styles.camera} type={type} flashMode={flash} ref={cameraReferencia}>
 
@@ -86,14 +90,18 @@ const Cam = ({ navigation }) => {
             </TouchableOpacity>
             )
           : (<View style={{flex:1, flexDirection: 'row', padding: 5 }}>
+            <View>
             <TouchableOpacity style={{ flex:1, backgroundColor: "#114358",flexDirection:'row', justifyContent:'center',padding:10,alignItems:'center',borderRadius: 8, marginRight: 5,}} onPress={save}>
               <FontAwesome style={{paddingRight: 15}} name={"save"} color={"#FFF"} size={24} onPress={save} />
               <Text style={{color:"#FFFFFF"}}>Guardar</Text>
             </TouchableOpacity>
+            </View>
+            <View>
             <TouchableOpacity style={{ flex:1, backgroundColor: "#114358",flexDirection:'row', justifyContent:'center',padding:10,alignItems:'center',borderRadius: 8 }} onPress={() => { setImage(null) }}>
               <FontAwesome style={{paddingRight: 15}} name={"trash"} color={"#FFF"} size={24} onPress={() => { setImage(null) }} />
               <Text style={{color:"#FFFFFF"}}>Descartar</Text>
             </TouchableOpacity>
+            </View>
           </View>)}
       </View>
     </View>
@@ -120,7 +128,7 @@ const styles = StyleSheet.create({
   camera: {
     flex: 10,
     width: '98%',
-
+    height:"98%"
   },
   buttonContainer: {
     flex: 8,

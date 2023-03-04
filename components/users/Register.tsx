@@ -61,7 +61,7 @@ const Register = () => {
         setIsLoading(true);
         await userCreate(email, password).then(async (result) => {
             console.info(result);
-            let avatar_url = await upload("image/jpeg" ,userAvatar, result.uid);
+            let avatar_url = await upload("users","image/jpeg" ,userAvatar, result.uid);
             let created = await writeUserData("users", result.uid, email, fullName,avatar_url);
             console.info(created);
             if (created === true) {

@@ -1,4 +1,4 @@
-import { Text, View, TextInput, StyleSheet, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
+import { Text, View, TextInput, StyleSheet, TouchableOpacity, Image, ActivityIndicator,Alert } from 'react-native';
 import { useState } from "react"
 
 import { loginFacebook, login } from '../../config/auth';
@@ -31,6 +31,10 @@ const Login = ({ navigation }) => {
       }
     ).catch((error) => {
       console.error("Algo salio mal", error);
+      Alert.alert(
+        "Login failed",
+        "Ups algo salio mal " + error.message
+      );
       setIsLoading(false);
     });
 
@@ -54,13 +58,25 @@ const Login = ({ navigation }) => {
     }).catch((error) => {
       switch (error.message) {
         case "Firebase: Error (auth/invalid-email).":
-          console.info("Correo invalido");
+          console.error("Correo invalido");
+          Alert.alert(
+            "Login failed",
+            "Correo invalido"
+          );
           break;
         case "Error (auth/wrong-password).":
-          console.info("Password incorrect");
+          console.error("Password incorrect");
+          Alert.alert(
+            "Login failed",
+            "Password incorrecto"
+          );
           break;
         case "Firebase: Error (auth/user-not-found).":
-          console.info("Email not found");
+          console.error("Email not found");
+          Alert.alert(
+            "Login failed",
+            "Usuario no existe"
+          );
           break;
       }
       console.log(error.message);
@@ -173,7 +189,6 @@ const styles = StyleSheet.create({
     padding: 16,
     flexDirection: 'row',
     justifyContent: 'space-evenly'
-
   },
   facebookLabel: {
     color: '#114358',

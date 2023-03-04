@@ -3,8 +3,9 @@ import { getStorage, ref, uploadString,uploadBytesResumable, getDownloadURL } fr
 
 const storage = getStorage();
 
-const upload = async(type, file, name ) => {
-    const imageRef = ref(storage, "users/"+name+".jpg");
+const upload = async(document,type, file, name ) => {
+    console.log("storage",file);
+    const imageRef = ref(storage, document + "/"+name+".jpg");
     const localFile = await fetch(file.uri);
     console.info("localfile ",localFile);
     const fileBlob = await localFile.blob();

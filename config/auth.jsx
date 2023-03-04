@@ -19,7 +19,7 @@ const userCreate = async (email, password) => {
 
 const login = async (email, password) => {
   const resultado = await signInWithEmailAndPassword(auth, email, password)
-  console.log(resultado);
+  //console.log(resultado);
   return resultado;
 };
 

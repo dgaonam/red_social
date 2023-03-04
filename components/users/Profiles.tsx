@@ -29,9 +29,10 @@ const Profiles = () => {
     const albune_search=async()=>{
         const permiso = await MediaLibrary.requestPermissionsAsync()
         if (permiso.granted) {
-        
+            let album = await MediaLibrary.getAlbumAsync("redes_sociales")
             MediaLibrary.getAssetsAsync({
                 mediaType: ["video", "photo"],
+                album: album
             }).then((data) => {
                 setData(data.assets.map((asset)=>{
                     return {
@@ -48,11 +49,12 @@ const Profiles = () => {
       }, []);
 
     return (
-        <ScrollView style={styles.scrollViewContainer}>
+        <View>
+        <ScrollView nestedScrollEnabled={true} style={styles.scrollViewContainer}>
             <View style={styles.headerContainer}>
                 <View style={styles.headerImageContainer}>
                     <TouchableOpacity style={styles.uploadContainer} onPress={avatar_selectAvatar}>
-                        <Image style={styles.uploadImageIcon} source={!user.data.avatar_url ? require('../../assets/adaptive-icon.png') : user.data.avatar_url} />
+                        <Image style={styles.uploadImageIcon} source={!user.data.avatar_url ? userAvatar : {uri: user.data.avatar_url}} />
                     </TouchableOpacity>
                 </View>
             </View>
@@ -67,6 +69,7 @@ const Profiles = () => {
                 <Posts isGrid={true} posts={data} />
             </View>
         </ScrollView>
+        </View>
     );
 };
 
