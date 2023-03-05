@@ -1,11 +1,13 @@
 import { Share, View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { writePostData } from '../../config/database';
+import { writePostData, writeNotificationData } from '../../config/database';
 import { async } from '@firebase/util';
 import { useState } from 'react';
 import * as MediaLibrary from 'expo-media-library';
 import UseUser from '../../hooks/UseUser';
+import uuid from 'react-native-uuid';
 import * as FileSystem from 'expo-file-system';
+
 
 
 const Post = ({ post }) => {
@@ -53,14 +55,24 @@ const Post = ({ post }) => {
     const AddLike = async (post) => {
         post.like = post.like + 1;
         const postUpdate = { id: post.id, author: { userId: post.userId, fullName: post.author, avatar_url: post.avatar_url }, type: post.type, picture_url: post.picture_url, like: post.like, place: "" };
-        console.log("Pots=>", postUpdate);
-        let created = await writePostData("posts", postUpdate).then(() => {
-            console.log("ok");
-            setNewPost(true);
+        let created = await writePostData("posts", postUpdate).then((result) => {
+            console.info(result);
+            const notification_uid = uuid.v4();
+            newNotification(notification_uid,user.data.avatar_url,"newLike",user.data.displayName + " dio me gusta a publicacion").then((result)=>{
+                console.info(result);
+                setNewPost(true);
+              }).catch((error)=>{
+                console.error("Error Notification: ");
+              });
         }).catch((error) => {
             console.error("Error Post Like:", error);
         });
     }
+
+    const newNotification = async(id,avatar_url,type,message)=>{
+        console.info("Notification==>",id,avatar_url,type,message);
+        await writeNotificationData("notifications",{id: id,avatar_url: avatar_url,type: type,message: message})
+      }
 
     const downloadPost = async (url,name) => {
         const permiso = await MediaLibrary.requestPermissionsAsync();

@@ -36,7 +36,7 @@ const Posts = ({ isGrid,posts }) => {
       if(created){
         
         const notification_uid = uuid.v4();
-        newNotification(notification_uid,user.data.avatar_url,"newPost","realizo una nueva publicacion").then((result)=>{
+        newNotification(notification_uid,user.data.avatar_url,"newPost",user.data.displayName + " realizo una nueva publicacion").then((result)=>{
           console.info(result);
           setIsLoading(false);
           setNewPost(true);
