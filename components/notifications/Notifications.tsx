@@ -4,42 +4,47 @@ import { View, Image, FlatList, TouchableOpacity, StyleSheet, StatusBar, SafeAre
 import { useState } from "react"
 
 import Notification from './Notification';
+import { readPostData } from '../../config/database';
+import UseUser from '../../hooks/UseUser';
 
-const DATA = [
-    {
-      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-      author: "dgaonam",
-      avatar_url: "https://firebasestorage.googleapis.com/v0/b/curso-f876a.appspot.com/o/users%2FWxpf93dtAbdWGCtr93q6EagSEo32.jpg?alt=media&token=b019d7ec-110f-49d3-9a83-7894effb2996",
-      description: "Esta es una descripción de una notificacion, de publicaciones realizadas en la aplicacion- 1"
-    },
-    {
-      id: 'bd7acbea-c1b1-36c2-aed5-3ad53abb28ba',
-      author: "dgaonam",
-      avatar_url: "https://firebasestorage.googleapis.com/v0/b/curso-f876a.appspot.com/o/users%2FWxpf93dtAbdWGCtr93q6EagSEo32.jpg?alt=media&token=b019d7ec-110f-49d3-9a83-7894effb2996",
-      description: "Esta es una descripción de una notificacion, de publicaciones realizadas en la aplicacion- 2"
-    },
-    {
-      id: 'bd7acbea-c1b1-26c2-aed5-3ad53abb28ba',
-      author: "dgaonam",
-      avatar_url: "https://firebasestorage.googleapis.com/v0/b/curso-f876a.appspot.com/o/users%2FWxpf93dtAbdWGCtr93q6EagSEo32.jpg?alt=media&token=b019d7ec-110f-49d3-9a83-7894effb2996",
-      description: "Esta es una descripción de una notificacion, de publicaciones realizadas en la aplicacion- 3"
-    },
-    {
-      id: 'bd7acbea-c1b1-16c2-aed5-3ad53abb28ba',
-      author: "dgaonam",
-      avatar_url: "https://firebasestorage.googleapis.com/v0/b/curso-f876a.appspot.com/o/users%2FWxpf93dtAbdWGCtr93q6EagSEo32.jpg?alt=media&token=b019d7ec-110f-49d3-9a83-7894effb2996",
-      description: "Esta es una descripción de una notificacion, de publicaciones realizadas en la aplicacion- 4"
-    },
-  ];
+const Notifications = () => {
+  const { user, newPost, setNewPost } = UseUser();
+  const [DATA, SETDATA] = useState([]);
 
-const Notifications = ({ posts }) => {
+  const searchNotifications = async () => {
+    console.log("Buscamos nuevas notificaciones");
+    await readPostData('notifications').then((result) => {
+      if (result !== null) {
+        const keys = Object.keys(result);
+        const notifications_result = keys.map(key => result[key]);
+        const formatingNotifications = [];
+        for (const notifications of notifications_result) {
+          formatingNotifications.push({
+            id: notifications.id,
+            avatar_url: notifications.avatar_url,
+            message: notifications.message,
+            type: notifications.type
+          })
+        }
+        SETDATA(formatingNotifications);
+      }
+    }).catch((error) => {
+      console.log("Error: ", error)
+    });
+
+  }
+
+  useEffect(() => {
+    searchNotifications();
+  }, [newPost]);
+
   const renderItem = ({ item }) => {
-    
-     
-      return (
-        <Notification notifications={item} />
-      );
-    
+
+
+    return (
+      <Notification notifications={item} />
+    );
+
   };
 
   const getKey = (item) => {

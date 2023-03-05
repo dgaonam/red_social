@@ -8,7 +8,7 @@ const Notification = ({ notifications }) => {
                 <View style={styles.listItemAuthorAvatarContainer}>
                     <Image style={styles.listItemAuthorAvatar} source={{ uri: notifications.avatar_url }} />
                 </View>
-                <Text style={styles.listItemAuthorName}>{notifications.author}</Text>
+                <Text style={styles.listItemAuthorName}>{notifications.message}</Text>
             </View>
             <View style={styles.listItemHeader}>
                 <Text>{notifications.description}</Text>

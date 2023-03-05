@@ -36,7 +36,7 @@ const Profiles = () => {
             }).then((data) => {
                 setData(data.assets.map((asset)=>{
                     return {
-                      id: asset.albumId,
+                      id: asset.id,
                       picture_url: asset.uri
                     }
                   }));
@@ -50,7 +50,7 @@ const Profiles = () => {
 
     return (
         <View>
-        <ScrollView nestedScrollEnabled={true} style={styles.scrollViewContainer}>
+        <ScrollView nestedScrollEnabled={true} scrollEnabled={true} style={styles.scrollViewContainer}>
             <View style={styles.headerContainer}>
                 <View style={styles.headerImageContainer}>
                     <TouchableOpacity style={styles.uploadContainer} onPress={avatar_selectAvatar}>

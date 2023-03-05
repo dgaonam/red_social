@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import { useState } from 'react';
+import { StyleSheet, PermissionsAndroid,Platform } from 'react-native';
+import { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -17,7 +17,7 @@ import HeaderRight from './components/header/HeaderRight';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-
+  const [newPost, setNewPost] = useState(false);
   const [user, setUser] = useState({
     session: false,
     data: {
@@ -28,9 +28,32 @@ export default function App() {
     }
   });
 
+ const getPermissions= async()=>{
+    if(Platform.OS==='android'){
+      let granted = await PermissionsAndroid.requestMultiple([
+        PermissionsAndroid.PERMISSIONS.CAMERA,
+        PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
+      ]);
+
+      if(granted !== PermissionsAndroid.RESULTS.GRANTED){
+        granted=await PermissionsAndroid.requestMultiple([
+          PermissionsAndroid.PERMISSIONS.CAMERA,
+          PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+          PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
+        ]);
+      }
+    }
+ }
+
+
+  useEffect(()=>{
+    getPermissions();
+  },[]);
+
   if (user.session === false) {
     return (
-      <UserContext.Provider value={{ user, setUser }}>
+      <UserContext.Provider value={{ user, newPost,setUser,setNewPost }}>
         <StatusBar />
         <NavigationContainer>
           <Stack.Navigator initialRouteName="Login" screenOptions={{
@@ -67,7 +90,7 @@ export default function App() {
   }
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, newPost,setUser,setNewPost }}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{
           headerTitleAlign: 'center',

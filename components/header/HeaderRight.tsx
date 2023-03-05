@@ -14,9 +14,6 @@ const HeaderRight = ({ navigation }) => {
                 <TouchableOpacity onPress={() => alert("chat")} >
                     <FontAwesome style={styles.iconBarTop} name={"wechat"} size={25} />
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => alert("Galeria")} >
-                    <FontAwesome style={styles.iconBarTop} name={"picture-o"} size={25} />
-                </TouchableOpacity>
                 <TouchableOpacity onPress={() => {
                     setUser({
                         session: false,
@@ -62,7 +59,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "row",
         alignItems: 'flex-end',
-        justifyContent: 'space-between',
+        justifyContent: 'space-around',
     },
     logo: {
         fontSize: 24,

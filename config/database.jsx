@@ -18,24 +18,39 @@ const writeUserData = (document, id, email, fullName,avatar_url) => {
   return created;
 }
 
-const writePostData = async(document, {id="",userId="", author="", avatar_url="",type="",picture_url="",like=0,description="",place=""}) => {
+const writePostData = async(document, {id="",author={},type="",picture_url="",like=0,place=""}) => {
   const dbCurso = getDatabase();
-  console.log(id);
+  console.log(like);
   try {
     set(ref(dbCurso, document + '/' + id), {
-      userId: userId,
-      author: author,
-      avatar_url: avatar_url,
+      id,
+      author: {userId: author.userId,fullName: author.fullName,avatar_url: author.avatar_url},
       type: type,
       picture_url: picture_url,
       like: like,
-      description:description,
       place:place,
     
     });
     return true;
   } catch (e) {
-    console.log(e);
+    console.log("Firbase: ",e);
+    return false;
+  }
+}
+
+const writeNotificationData = async(document, {id="",avatar_url,type,message}) => {
+  const dbCurso = getDatabase();
+  console.log(id);
+  try {
+    set(ref(dbCurso, document + '/' + id), {
+      id,
+      avatar_url: avatar_url,
+      type: type,
+      message: message,
+    });
+    return true;
+  } catch (e) {
+    console.log("Firbase: ",e);
     return false;
   }
 }
@@ -55,4 +70,5 @@ const readPostData =  async(document) => {
   })
   return resultado;
 }
-export { writeUserData, writePostData, readUserData,readPostData };
+
+export { writeUserData, writePostData, writeNotificationData, readUserData,readPostData };
