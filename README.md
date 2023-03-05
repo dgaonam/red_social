@@ -44,5 +44,16 @@
 
 ![Captura desde 2023-03-04 21-31-56](https://user-images.githubusercontent.com/67657380/222940217-3b8a7242-8cc6-4f08-b7b0-0e8731100e95.png)
 
+<br>
+
+# Publicar Post
+
+<br>
+
+![WhatsApp Image 2023-03-04 at 21 40 27](https://user-images.githubusercontent.com/67657380/222940452-59787941-27fc-48e7-9d4c-c774f27fba6a.jpeg)
+
+
+
+
 
 
