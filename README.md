@@ -30,7 +30,11 @@
 # Navegacion 
 <br>
 
-![Captura desde 2023-03-01 22-56-25](https://user-images.githubusercontent.com/67657380/222335039-a208280b-419d-494a-8e87-f7f0bbf536b3.png)
+![Captura desde 2023-03-04 21-31-46](https://user-images.githubusercontent.com/67657380/222940210-e8cc223f-5687-4421-8e8e-7d8ad8be0681.png)
+
+# Notificaciones
+<br>
+![Captura desde 2023-03-04 21-31-56](https://user-images.githubusercontent.com/67657380/222940217-3b8a7242-8cc6-4f08-b7b0-0e8731100e95.png)
 
 
 
