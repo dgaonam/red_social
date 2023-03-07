@@ -78,7 +78,40 @@ const Post = ({ post }) => {
         const permiso = await MediaLibrary.requestPermissionsAsync();
 
         if (permiso.granted) {
-         
+            try {
+                const callback = downloadProgress => {
+                    const progress = downloadProgress.totalBytesWritten / downloadProgress.totalBytesExpectedToWrite;
+                    console.log("Progress==>",progress);
+                  };
+                const downloadResumable = FileSystem.createDownloadResumable(
+                    url,
+                    FileSystem.cacheDirectory + name + ".jpg",
+                    {},
+                    callback
+                  );
+    
+                try {
+                    const { uri } = await downloadResumable.downloadAsync();
+    
+                    const asset = await MediaLibrary.createAssetAsync(uri);
+                    MediaLibrary.createAlbumAsync('redes_sociales', asset)
+                      .then(() => {
+                        console.log('Album created!');
+                        alert("Imagen guardada de forma correctamente!");
+                      })
+                      .catch(error => {
+                        console.log('err', error);
+                      })
+    
+    
+                    console.log('Finished downloading to ', uri);
+                  } catch (e) {
+                    console.error(e);
+                  }
+               
+              } catch (e) {
+                console.log(e);
+              }
         }
         
     }
